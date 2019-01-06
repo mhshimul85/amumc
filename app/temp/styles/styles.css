@@ -367,7 +367,7 @@ a {
   color: #d59541;
 }
 
-/* Do not edit modules/_sprite directly as it is generated automatically by Gulp.
+/* Do not edit 3-components/_sprite directly as it is generated automatically by Gulp.
 Instead edit gulp/templates/sprite */
 
 .icon {
@@ -449,5 +449,230 @@ Instead edit gulp/templates/sprite */
     height: 44px;
     background-position: 37.76931216931217% 45.917910447761194%;
   }
+
+nav{
+    box-shadow: 0px 1px 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+nav .navbar-header{
+        min-height: 60px;
+        overflow: hidden;
+    }
+
+nav .navbar-brand{
+        width: 70%;
+        font-size: 200%;
+        text-decoration: none;
+        display: inline-block;
+        margin: 13px 0 0 5px;
+    }
+
+nav .navbar-icon{
+        text-decoration: none;
+        padding: 5px 10px;
+        display: inline-block;
+        cursor: pointer;
+        float: right;
+        border: 1px solid gray;
+        border-radius: 5px;
+        background: #fff;
+        margin: 5px 5px 0 0;
+    }
+
+nav .bar1, nav .bar2, nav .bar3 {
+        width: 35px;
+        height: 5px;
+        background-color: #333;
+        margin: 6px 0;
+        transition: 0.4s;
+        display: block;
+    }
+
+nav .change nav .bar1 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+        transform: rotate(-45deg) translate(-9px, 6px);
+    }
+
+nav .change nav .bar2 {
+        opacity: 0;
+    }
+
+nav .change nav .bar3 {
+        -webkit-transform: rotate(45deg) translate(-8px, -8px);
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+
+nav ul{
+        list-style: none;
+    }
+
+nav > ul{
+        display: none;
+    }
+
+nav > ul > li:first-child{
+        border-top: 1px solid rgba(126, 119, 119, 0.74);
+    }
+
+nav ul li a{
+        display: block;
+        text-decoration: none;
+        color: black;
+        padding: 10px 0 10px 10px;   
+    }
+
+nav ul li a:hover{
+        background: rgba(185, 175, 173, 0.945);
+    }
+
+nav li ul,
+    nav ul li ul li ul{
+        display: none;
+    }
+
+nav ul li ul li{
+        padding-left: 20px;
+    }
+
+nav ul li ul li a{
+        border-radius: 5px 0 0 5px;
+    }
+
+.mh-show{
+    display: block;
+}
+
+i{
+    border: solid black;
+    border-width: 0 5px 5px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    float: right;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.mh-up{
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+/*
+
+@media screen and (max-width: 780px) {
+    nav{
+        box-shadow: 0px 1px 15px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+    }
+    .navbar-header{
+        min-height: 60px;
+        overflow: hidden;
+    }
+    .navbar-brand{
+        width: 70%;
+        font-size: 200%;
+        text-decoration: none;
+        display: inline-block;
+        margin: 13px 0 0 5px;
+    }
+    .navbar-icon{
+        text-decoration: none;
+        padding: 5px 10px;
+        display: inline-block;
+        cursor: pointer;
+        float: right;
+        border: 1px solid gray;
+        border-radius: 5px;
+        background: #fff;
+        margin: 5px 5px 0 0;
+    }
+    .bar1, .bar2, .bar3 {
+        width: 35px;
+        height: 5px;
+        background-color: #333;
+        margin: 6px 0;
+        transition: 0.4s;
+        display: block;
+    }
+
+    .change .bar1 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+        transform: rotate(-45deg) translate(-9px, 6px);
+    }
+    
+    .change .bar2 {
+        opacity: 0;
+    }
+    
+    .change .bar3 {
+        -webkit-transform: rotate(45deg) translate(-8px, -8px);
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+      
+    ul{
+        list-style: none;
+    }
+    nav > ul{
+        display: none;
+    }
+    
+    nav > ul > li:first-child{
+        border-top: 1px solid rgba(126, 119, 119, 0.74);
+    }
+    nav ul li a{
+        display: block;
+        text-decoration: none;
+        color: black;
+        padding: 10px 0 10px 10px;   
+    }
+    nav ul li a:hover{
+        background: rgba(185, 175, 173, 0.945);
+    }
+    nav li ul,
+    nav ul li ul li ul{
+        display: none;
+    }
+    nav ul li ul li{
+        padding-left: 20px;
+    }
+    nav ul li ul li a{
+        border-radius: 5px 0 0 5px;
+    }
+    .mh-show{
+        display: block;
+    }
+    i{
+        border: solid black;
+        border-width: 0 5px 5px 0;
+        display: inline-block;
+        padding: 5px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        float: right;
+        margin-right: 15px;
+        transition: all 0.3s ease;
+    }
+    .mh-up{
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transition: all 0.3s ease;
+    }
+}
+@media screen and (max-width: 320px) {
+    .navbar-brand{
+        font-size: 150%;
+        width: 55%;
+        margin: 20px 0 0 5px;
+    }
+    .navbar-icon{
+        
+    }
+}
+
+*/
 
 /* New Import Files */
