@@ -42,30 +42,29 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(8);
+	__webpack_require__(3);
 
-	__webpack_require__(9);
+	__webpack_require__(4);
 
-	__webpack_require__(10);
+	__webpack_require__(5);
 
-/***/ },
+/***/ }),
 /* 1 */,
 /* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */
-/***/ function(module, exports) {
+/* 3 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/*!
-	 * modernizr v3.3.1
-	 * Build http://modernizr.com/download?-flexbox-svg-setclasses-dontmin
+	 * modernizr v3.6.0
+	 * Build https://modernizr.com/download?-svg-setclasses-dontmin
 	 *
 	 * Copyright (c)
 	 *  Faruk Ates
@@ -87,9 +86,8 @@
 	 * of control over the experience.
 	*/
 
-	;(function(window, document, undefined){
+	;(function (window, document, undefined) {
 	  var tests = [];
-	  
 
 	  /**
 	   *
@@ -101,7 +99,7 @@
 
 	  var ModernizrProto = {
 	    // The current version, dummy
-	    _version: '3.3.1',
+	    _version: '3.6.0',
 
 	    // Any settings that don't work as separate modules
 	    // can go in here as configuration.
@@ -116,7 +114,7 @@
 	    _q: [],
 
 	    // Stub these for people who are listening
-	    on: function(test, cb) {
+	    on: function on(test, cb) {
 	      // I don't really think people should do this, but we can
 	      // safe guard it a bit.
 	      // -- NOTE:: this gets WAY overridden in src/addTest for actual async tests.
@@ -124,34 +122,29 @@
 	      // but the code to *disallow* sync tests in the real version of this
 	      // function is actually larger than this.
 	      var self = this;
-	      setTimeout(function() {
+	      setTimeout(function () {
 	        cb(self[test]);
 	      }, 0);
 	    },
 
-	    addTest: function(name, fn, options) {
-	      tests.push({name: name, fn: fn, options: options});
+	    addTest: function addTest(name, fn, options) {
+	      tests.push({ name: name, fn: fn, options: options });
 	    },
 
-	    addAsyncTest: function(fn) {
-	      tests.push({name: null, fn: fn});
+	    addAsyncTest: function addAsyncTest(fn) {
+	      tests.push({ name: null, fn: fn });
 	    }
 	  };
 
-	  
-
 	  // Fake some of Object.create so we can force non test results to be non "own" properties.
-	  var Modernizr = function() {};
+	  var Modernizr = function Modernizr() {};
 	  Modernizr.prototype = ModernizrProto;
 
 	  // Leak modernizr globally when you `require` it rather than force it here.
 	  // Overwrite name so constructor name is nicer :D
 	  Modernizr = new Modernizr();
 
-	  
-
 	  var classes = [];
-	  
 
 	  /**
 	   * is returns a boolean if the typeof an obj is exactly type.
@@ -164,7 +157,7 @@
 	   */
 
 	  function is(obj, type) {
-	    return typeof obj === type;
+	    return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === type;
 	  }
 	  ;
 
@@ -208,7 +201,6 @@
 	        // Run the test, or use the raw value if it's not a function
 	        result = is(feature.fn, 'function') ? feature.fn() : feature.fn;
 
-
 	        // Set each of the names on the Modernizr object
 	        for (nameIdx = 0; nameIdx < featureNames.length; nameIdx++) {
 	          featureName = featureNames[nameIdx];
@@ -224,7 +216,6 @@
 	            Modernizr[featureNameSplit[0]] = result;
 	          } else {
 	            // cast to a Boolean, if not one already
-	            /* jshint -W053 */
 	            if (Modernizr[featureNameSplit[0]] && !(Modernizr[featureNameSplit[0]] instanceof Boolean)) {
 	              Modernizr[featureNameSplit[0]] = new Boolean(Modernizr[featureNameSplit[0]]);
 	            }
@@ -247,7 +238,6 @@
 	   */
 
 	  var docElement = document.documentElement;
-	  
 
 	  /**
 	   * A convenience helper to check if the document we are running in is an SVG document
@@ -257,7 +247,6 @@
 	   */
 
 	  var isSVG = docElement.nodeName.toLowerCase() === 'svg';
-	  
 
 	  /**
 	   * setClasses takes an array of class names and adds them to the root element
@@ -287,579 +276,39 @@
 	    if (Modernizr._config.enableClasses) {
 	      // Add the new classes
 	      className += ' ' + classPrefix + classes.join(' ' + classPrefix);
-	      isSVG ? docElement.className.baseVal = className : docElement.className = className;
-	    }
-
-	  }
-
-	  ;
-
-	  /**
-	   * If the browsers follow the spec, then they would expose vendor-specific style as:
-	   *   elem.style.WebkitBorderRadius
-	   * instead of something like the following, which would be technically incorrect:
-	   *   elem.style.webkitBorderRadius
-
-	   * Webkit ghosts their properties in lowercase but Opera & Moz do not.
-	   * Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
-	   *   erik.eae.net/archives/2008/03/10/21.48.10/
-
-	   * More here: github.com/Modernizr/Modernizr/issues/issue/21
-	   *
-	   * @access private
-	   * @returns {string} The string representing the vendor-specific style properties
-	   */
-
-	  var omPrefixes = 'Moz O ms Webkit';
-	  
-
-	  var cssomPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.split(' ') : []);
-	  ModernizrProto._cssomPrefixes = cssomPrefixes;
-	  
-
-
-	  /**
-	   * contains checks to see if a string contains another string
-	   *
-	   * @access private
-	   * @function contains
-	   * @param {string} str - The string we want to check for substrings
-	   * @param {string} substr - The substring we want to search the first string for
-	   * @returns {boolean}
-	   */
-
-	  function contains(str, substr) {
-	    return !!~('' + str).indexOf(substr);
-	  }
-
-	  ;
-
-	  /**
-	   * createElement is a convenience wrapper around document.createElement. Since we
-	   * use createElement all over the place, this allows for (slightly) smaller code
-	   * as well as abstracting away issues with creating elements in contexts other than
-	   * HTML documents (e.g. SVG documents).
-	   *
-	   * @access private
-	   * @function createElement
-	   * @returns {HTMLElement|SVGElement} An HTML or SVG element
-	   */
-
-	  function createElement() {
-	    if (typeof document.createElement !== 'function') {
-	      // This is the case in IE7, where the type of createElement is "object".
-	      // For this reason, we cannot call apply() as Object is not a Function.
-	      return document.createElement(arguments[0]);
-	    } else if (isSVG) {
-	      return document.createElementNS.call(document, 'http://www.w3.org/2000/svg', arguments[0]);
-	    } else {
-	      return document.createElement.apply(document, arguments);
-	    }
-	  }
-
-	  ;
-
-	  /**
-	   * Create our "modernizr" element that we do most feature tests on.
-	   *
-	   * @access private
-	   */
-
-	  var modElem = {
-	    elem: createElement('modernizr')
-	  };
-
-	  // Clean up this element
-	  Modernizr._q.push(function() {
-	    delete modElem.elem;
-	  });
-
-	  
-
-	  var mStyle = {
-	    style: modElem.elem.style
-	  };
-
-	  // kill ref for gc, must happen before mod.elem is removed, so we unshift on to
-	  // the front of the queue.
-	  Modernizr._q.unshift(function() {
-	    delete mStyle.style;
-	  });
-
-	  
-
-	  /**
-	   * getBody returns the body of a document, or an element that can stand in for
-	   * the body if a real body does not exist
-	   *
-	   * @access private
-	   * @function getBody
-	   * @returns {HTMLElement|SVGElement} Returns the real body of a document, or an
-	   * artificially created element that stands in for the body
-	   */
-
-	  function getBody() {
-	    // After page load injecting a fake body doesn't work so check if body exists
-	    var body = document.body;
-
-	    if (!body) {
-	      // Can't use the real body create a fake one.
-	      body = createElement(isSVG ? 'svg' : 'body');
-	      body.fake = true;
-	    }
-
-	    return body;
-	  }
-
-	  ;
-
-	  /**
-	   * injectElementWithStyles injects an element with style element and some CSS rules
-	   *
-	   * @access private
-	   * @function injectElementWithStyles
-	   * @param {string} rule - String representing a css rule
-	   * @param {function} callback - A function that is used to test the injected element
-	   * @param {number} [nodes] - An integer representing the number of additional nodes you want injected
-	   * @param {string[]} [testnames] - An array of strings that are used as ids for the additional nodes
-	   * @returns {boolean}
-	   */
-
-	  function injectElementWithStyles(rule, callback, nodes, testnames) {
-	    var mod = 'modernizr';
-	    var style;
-	    var ret;
-	    var node;
-	    var docOverflow;
-	    var div = createElement('div');
-	    var body = getBody();
-
-	    if (parseInt(nodes, 10)) {
-	      // In order not to give false positives we create a node for each test
-	      // This also allows the method to scale for unspecified uses
-	      while (nodes--) {
-	        node = createElement('div');
-	        node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-	        div.appendChild(node);
+	      if (isSVG) {
+	        docElement.className.baseVal = className;
+	      } else {
+	        docElement.className = className;
 	      }
 	    }
-
-	    style = createElement('style');
-	    style.type = 'text/css';
-	    style.id = 's' + mod;
-
-	    // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
-	    // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
-	    (!body.fake ? div : body).appendChild(style);
-	    body.appendChild(div);
-
-	    if (style.styleSheet) {
-	      style.styleSheet.cssText = rule;
-	    } else {
-	      style.appendChild(document.createTextNode(rule));
-	    }
-	    div.id = mod;
-
-	    if (body.fake) {
-	      //avoid crashing IE8, if background image is used
-	      body.style.background = '';
-	      //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-	      body.style.overflow = 'hidden';
-	      docOverflow = docElement.style.overflow;
-	      docElement.style.overflow = 'hidden';
-	      docElement.appendChild(body);
-	    }
-
-	    ret = callback(div, rule);
-	    // If this is done after page load we don't want to remove the body so check if body exists
-	    if (body.fake) {
-	      body.parentNode.removeChild(body);
-	      docElement.style.overflow = docOverflow;
-	      // Trigger layout so kinetic scrolling isn't disabled in iOS6+
-	      docElement.offsetHeight;
-	    } else {
-	      div.parentNode.removeChild(div);
-	    }
-
-	    return !!ret;
-
 	  }
 
 	  ;
-
-	  /**
-	   * domToCSS takes a camelCase string and converts it to kebab-case
-	   * e.g. boxSizing -> box-sizing
-	   *
-	   * @access private
-	   * @function domToCSS
-	   * @param {string} name - String name of camelCase prop we want to convert
-	   * @returns {string} The kebab-case version of the supplied name
-	   */
-
-	  function domToCSS(name) {
-	    return name.replace(/([A-Z])/g, function(str, m1) {
-	      return '-' + m1.toLowerCase();
-	    }).replace(/^ms-/, '-ms-');
+	  /*!
+	  {
+	    "name": "SVG",
+	    "property": "svg",
+	    "caniuse": "svg",
+	    "tags": ["svg"],
+	    "authors": ["Erik Dahlstrom"],
+	    "polyfills": [
+	      "svgweb",
+	      "raphael",
+	      "amplesdk",
+	      "canvg",
+	      "svg-boilerplate",
+	      "sie",
+	      "dojogfx",
+	      "fabricjs"
+	    ]
 	  }
-	  ;
-
-	  /**
-	   * nativeTestProps allows for us to use native feature detection functionality if available.
-	   * some prefixed form, or false, in the case of an unsupported rule
-	   *
-	   * @access private
-	   * @function nativeTestProps
-	   * @param {array} props - An array of property names
-	   * @param {string} value - A string representing the value we want to check via @supports
-	   * @returns {boolean|undefined} A boolean when @supports exists, undefined otherwise
-	   */
-
-	  // Accepts a list of property names and a single value
-	  // Returns `undefined` if native detection not available
-	  function nativeTestProps(props, value) {
-	    var i = props.length;
-	    // Start with the JS API: http://www.w3.org/TR/css3-conditional/#the-css-interface
-	    if ('CSS' in window && 'supports' in window.CSS) {
-	      // Try every prefixed variant of the property
-	      while (i--) {
-	        if (window.CSS.supports(domToCSS(props[i]), value)) {
-	          return true;
-	        }
-	      }
-	      return false;
-	    }
-	    // Otherwise fall back to at-rule (for Opera 12.x)
-	    else if ('CSSSupportsRule' in window) {
-	      // Build a condition string for every prefixed variant
-	      var conditionText = [];
-	      while (i--) {
-	        conditionText.push('(' + domToCSS(props[i]) + ':' + value + ')');
-	      }
-	      conditionText = conditionText.join(' or ');
-	      return injectElementWithStyles('@supports (' + conditionText + ') { #modernizr { position: absolute; } }', function(node) {
-	        return getComputedStyle(node, null).position == 'absolute';
-	      });
-	    }
-	    return undefined;
-	  }
-	  ;
-
-	  /**
-	   * cssToDOM takes a kebab-case string and converts it to camelCase
-	   * e.g. box-sizing -> boxSizing
-	   *
-	   * @access private
-	   * @function cssToDOM
-	   * @param {string} name - String name of kebab-case prop we want to convert
-	   * @returns {string} The camelCase version of the supplied name
-	   */
-
-	  function cssToDOM(name) {
-	    return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
-	      return m1 + m2.toUpperCase();
-	    }).replace(/^-/, '');
-	  }
-	  ;
-
-	  // testProps is a generic CSS / DOM property test.
-
-	  // In testing support for a given CSS property, it's legit to test:
-	  //    `elem.style[styleName] !== undefined`
-	  // If the property is supported it will return an empty string,
-	  // if unsupported it will return undefined.
-
-	  // We'll take advantage of this quick test and skip setting a style
-	  // on our modernizr element, but instead just testing undefined vs
-	  // empty string.
-
-	  // Property names can be provided in either camelCase or kebab-case.
-
-	  function testProps(props, prefixed, value, skipValueTest) {
-	    skipValueTest = is(skipValueTest, 'undefined') ? false : skipValueTest;
-
-	    // Try native detect first
-	    if (!is(value, 'undefined')) {
-	      var result = nativeTestProps(props, value);
-	      if (!is(result, 'undefined')) {
-	        return result;
-	      }
-	    }
-
-	    // Otherwise do it properly
-	    var afterInit, i, propsLength, prop, before;
-
-	    // If we don't have a style element, that means we're running async or after
-	    // the core tests, so we'll need to create our own elements to use
-
-	    // inside of an SVG element, in certain browsers, the `style` element is only
-	    // defined for valid tags. Therefore, if `modernizr` does not have one, we
-	    // fall back to a less used element and hope for the best.
-	    var elems = ['modernizr', 'tspan'];
-	    while (!mStyle.style) {
-	      afterInit = true;
-	      mStyle.modElem = createElement(elems.shift());
-	      mStyle.style = mStyle.modElem.style;
-	    }
-
-	    // Delete the objects if we created them.
-	    function cleanElems() {
-	      if (afterInit) {
-	        delete mStyle.style;
-	        delete mStyle.modElem;
-	      }
-	    }
-
-	    propsLength = props.length;
-	    for (i = 0; i < propsLength; i++) {
-	      prop = props[i];
-	      before = mStyle.style[prop];
-
-	      if (contains(prop, '-')) {
-	        prop = cssToDOM(prop);
-	      }
-
-	      if (mStyle.style[prop] !== undefined) {
-
-	        // If value to test has been passed in, do a set-and-check test.
-	        // 0 (integer) is a valid property value, so check that `value` isn't
-	        // undefined, rather than just checking it's truthy.
-	        if (!skipValueTest && !is(value, 'undefined')) {
-
-	          // Needs a try catch block because of old IE. This is slow, but will
-	          // be avoided in most cases because `skipValueTest` will be used.
-	          try {
-	            mStyle.style[prop] = value;
-	          } catch (e) {}
-
-	          // If the property value has changed, we assume the value used is
-	          // supported. If `value` is empty string, it'll fail here (because
-	          // it hasn't changed), which matches how browsers have implemented
-	          // CSS.supports()
-	          if (mStyle.style[prop] != before) {
-	            cleanElems();
-	            return prefixed == 'pfx' ? prop : true;
-	          }
-	        }
-	        // Otherwise just return true, or the property name if this is a
-	        // `prefixed()` call
-	        else {
-	          cleanElems();
-	          return prefixed == 'pfx' ? prop : true;
-	        }
-	      }
-	    }
-	    cleanElems();
-	    return false;
-	  }
-
-	  ;
-
-	  /**
-	   * List of JavaScript DOM values used for tests
-	   *
-	   * @memberof Modernizr
-	   * @name Modernizr._domPrefixes
-	   * @optionName Modernizr._domPrefixes
-	   * @optionProp domPrefixes
-	   * @access public
-	   * @example
-	   *
-	   * Modernizr._domPrefixes is exactly the same as [_prefixes](#modernizr-_prefixes), but rather
-	   * than kebab-case properties, all properties are their Capitalized variant
-	   *
-	   * ```js
-	   * Modernizr._domPrefixes === [ "Moz", "O", "ms", "Webkit" ];
-	   * ```
-	   */
-
-	  var domPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.toLowerCase().split(' ') : []);
-	  ModernizrProto._domPrefixes = domPrefixes;
-	  
-
-	  /**
-	   * fnBind is a super small [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) polyfill.
-	   *
-	   * @access private
-	   * @function fnBind
-	   * @param {function} fn - a function you want to change `this` reference to
-	   * @param {object} that - the `this` you want to call the function with
-	   * @returns {function} The wrapped version of the supplied function
-	   */
-
-	  function fnBind(fn, that) {
-	    return function() {
-	      return fn.apply(that, arguments);
-	    };
-	  }
-
-	  ;
-
-	  /**
-	   * testDOMProps is a generic DOM property test; if a browser supports
-	   *   a certain property, it won't return undefined for it.
-	   *
-	   * @access private
-	   * @function testDOMProps
-	   * @param {array.<string>} props - An array of properties to test for
-	   * @param {object} obj - An object or Element you want to use to test the parameters again
-	   * @param {boolean|object} elem - An Element to bind the property lookup again. Use `false` to prevent the check
-	   */
-	  function testDOMProps(props, obj, elem) {
-	    var item;
-
-	    for (var i in props) {
-	      if (props[i] in obj) {
-
-	        // return the property name as a string
-	        if (elem === false) {
-	          return props[i];
-	        }
-
-	        item = obj[props[i]];
-
-	        // let's bind a function
-	        if (is(item, 'function')) {
-	          // bind to obj unless overriden
-	          return fnBind(item, elem || obj);
-	        }
-
-	        // return the unbound function or obj or value
-	        return item;
-	      }
-	    }
-	    return false;
-	  }
-
-	  ;
-
-	  /**
-	   * testPropsAll tests a list of DOM properties we want to check against.
-	   * We specify literally ALL possible (known and/or likely) properties on
-	   * the element including the non-vendor prefixed one, for forward-
-	   * compatibility.
-	   *
-	   * @access private
-	   * @function testPropsAll
-	   * @param {string} prop - A string of the property to test for
-	   * @param {string|object} [prefixed] - An object to check the prefixed properties on. Use a string to skip
-	   * @param {HTMLElement|SVGElement} [elem] - An element used to test the property and value against
-	   * @param {string} [value] - A string of a css value
-	   * @param {boolean} [skipValueTest] - An boolean representing if you want to test if value sticks when set
-	   */
-	  function testPropsAll(prop, prefixed, elem, value, skipValueTest) {
-
-	    var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-	    props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
-
-	    // did they call .prefixed('boxSizing') or are we just testing a prop?
-	    if (is(prefixed, 'string') || is(prefixed, 'undefined')) {
-	      return testProps(props, prefixed, value, skipValueTest);
-
-	      // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
-	    } else {
-	      props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
-	      return testDOMProps(props, prefixed, elem);
-	    }
-	  }
-
-	  // Modernizr.testAllProps() investigates whether a given style property,
-	  // or any of its vendor-prefixed variants, is recognized
-	  //
-	  // Note that the property names must be provided in the camelCase variant.
-	  // Modernizr.testAllProps('boxSizing')
-	  ModernizrProto.testAllProps = testPropsAll;
-
-	  
-
-	  /**
-	   * testAllProps determines whether a given CSS property is supported in the browser
-	   *
-	   * @memberof Modernizr
-	   * @name Modernizr.testAllProps
-	   * @optionName Modernizr.testAllProps()
-	   * @optionProp testAllProps
-	   * @access public
-	   * @function testAllProps
-	   * @param {string} prop - String naming the property to test (either camelCase or kebab-case)
-	   * @param {string} [value] - String of the value to test
-	   * @param {boolean} [skipValueTest=false] - Whether to skip testing that the value is supported when using non-native detection
-	   * @example
-	   *
-	   * testAllProps determines whether a given CSS property, in some prefixed form,
-	   * is supported by the browser.
-	   *
-	   * ```js
-	   * testAllProps('boxSizing')  // true
-	   * ```
-	   *
-	   * It can optionally be given a CSS value in string form to test if a property
-	   * value is valid
-	   *
-	   * ```js
-	   * testAllProps('display', 'block') // true
-	   * testAllProps('display', 'penguin') // false
-	   * ```
-	   *
-	   * A boolean can be passed as a third parameter to skip the value check when
-	   * native detection (@supports) isn't available.
-	   *
-	   * ```js
-	   * testAllProps('shapeOutside', 'content-box', true);
-	   * ```
-	   */
-
-	  function testAllProps(prop, value, skipValueTest) {
-	    return testPropsAll(prop, undefined, undefined, value, skipValueTest);
-	  }
-	  ModernizrProto.testAllProps = testAllProps;
-	  
-	/*!
-	{
-	  "name": "Flexbox",
-	  "property": "flexbox",
-	  "caniuse": "flexbox",
-	  "tags": ["css"],
-	  "notes": [{
-	    "name": "The _new_ flexbox",
-	    "href": "http://dev.w3.org/csswg/css3-flexbox"
-	  }],
-	  "warnings": [
-	    "A `true` result for this detect does not imply that the `flex-wrap` property is supported; see the `flexwrap` detect."
-	  ]
-	}
-	!*/
-	/* DOC
-	Detects support for the Flexible Box Layout model, a.k.a. Flexbox, which allows easy manipulation of layout order and sizing within a container.
-	*/
-
-	  Modernizr.addTest('flexbox', testAllProps('flexBasis', '1px', true));
-
-	/*!
-	{
-	  "name": "SVG",
-	  "property": "svg",
-	  "caniuse": "svg",
-	  "tags": ["svg"],
-	  "authors": ["Erik Dahlstrom"],
-	  "polyfills": [
-	    "svgweb",
-	    "raphael",
-	    "amplesdk",
-	    "canvg",
-	    "svg-boilerplate",
-	    "sie",
-	    "dojogfx",
-	    "fabricjs"
-	  ]
-	}
-	!*/
-	/* DOC
-	Detects support for SVG in `<embed>` or `<object>` elements.
-	*/
+	  !*/
+	  /* DOC
+	  Detects support for SVG in `<embed>` or `<object>` elements.
+	  */
 
 	  Modernizr.addTest('svg', !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect);
-
 
 	  // Run each test
 	  testRunner();
@@ -878,14 +327,12 @@
 	  // Leak Modernizr namespace
 	  window.Modernizr = Modernizr;
 
-
-	;
-
+	  ;
 	})(window, document);
 
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! picturefill - v3.0.2 - 2016-02-12
 	 * https://scottjehl.github.io/picturefill/
@@ -2433,9 +1880,9 @@
 	} )( window, document );
 
 
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
 
 	(function(window, factory) {
 		var lazySizes = factory(window, window.document);
@@ -2448,7 +1895,7 @@
 		/*jshint eqnull:true */
 		if(!document.getElementsByClassName){return;}
 
-		var lazySizesConfig;
+		var lazysizes, lazySizesConfig;
 
 		var docElem = document.documentElement;
 
@@ -2507,9 +1954,17 @@
 		};
 
 		var triggerEvent = function(elem, name, detail, noBubbles, noCancelable){
-			var event = document.createEvent('CustomEvent');
+			var event = document.createEvent('Event');
 
-			event.initCustomEvent(name, !noBubbles, !noCancelable, detail || {});
+			if(!detail){
+				detail = {};
+			}
+
+			detail.instance = lazysizes;
+
+			event.initEvent(name, !noBubbles, !noCancelable);
+
+			event.detail = detail;
 
 			elem.dispatchEvent(event);
 			return event;
@@ -2518,6 +1973,9 @@
 		var updatePolyfill = function (el, full){
 			var polyfill;
 			if( !supportPicture && ( polyfill = (window.picturefill || lazySizesConfig.pf) ) ){
+				if(full && full.src && !el[_getAttribute]('srcset')){
+					el.setAttribute('srcset', full.src);
+				}
 				polyfill({reevaluate: true, elements: [el]});
 			} else if(full && full.src){
 				el.src = full.src;
@@ -2541,24 +1999,30 @@
 
 		var rAF = (function(){
 			var running, waiting;
-			var fns = [];
+			var firstFns = [];
+			var secondFns = [];
+			var fns = firstFns;
 
 			var run = function(){
-				var fn;
+				var runFns = fns;
+
+				fns = firstFns.length ? secondFns : firstFns;
+
 				running = true;
 				waiting = false;
-				while(fns.length){
-					fn = fns.shift();
-					fn[0].apply(fn[1], fn[2]);
+
+				while(runFns.length){
+					runFns.shift()();
 				}
+
 				running = false;
 			};
 
-			return function(fn){
-				if(running){
+			var rafBatch = function(fn, queue){
+				if(running && !queue){
 					fn.apply(this, arguments);
 				} else {
-					fns.push([fn, this, arguments]);
+					fns.push(fn);
 
 					if(!waiting){
 						waiting = true;
@@ -2566,6 +2030,10 @@
 					}
 				}
 			};
+
+			rafBatch._lsFlush = run;
+
+			return rafBatch;
 		})();
 
 		var rAFIt = function(fn, simple){
@@ -2586,21 +2054,21 @@
 		var throttle = function(fn){
 			var running;
 			var lastTime = 0;
-			var gDelay = 125;
-			var RIC_DEFAULT_TIMEOUT = 999;
-			var rICTimeout = RIC_DEFAULT_TIMEOUT;
+			var gDelay = lazySizesConfig.throttleDelay;
+			var rICTimeout = lazySizesConfig.ricTimeout;
 			var run = function(){
 				running = false;
 				lastTime = Date.now();
 				fn();
 			};
-			var idleCallback = requestIdleCallback ?
+			var idleCallback = requestIdleCallback && rICTimeout > 49 ?
 				function(){
 					requestIdleCallback(run, {timeout: rICTimeout});
-					if(rICTimeout !== RIC_DEFAULT_TIMEOUT){
-						rICTimeout = RIC_DEFAULT_TIMEOUT;
+
+					if(rICTimeout !== lazySizesConfig.ricTimeout){
+						rICTimeout = lazySizesConfig.ricTimeout;
 					}
-				}:
+				} :
 				rAFIt(function(){
 					setTimeout(run);
 				}, true)
@@ -2608,8 +2076,9 @@
 
 			return function(isPriority){
 				var delay;
+
 				if((isPriority = isPriority === true)){
-					rICTimeout = 66;
+					rICTimeout = 33;
 				}
 
 				if(running){
@@ -2624,7 +2093,7 @@
 					delay = 0;
 				}
 
-				if(isPriority || (delay < 9 && requestIdleCallback)){
+				if(isPriority || delay < 9){
 					idleCallback();
 				} else {
 					setTimeout(idleCallback, delay);
@@ -2659,9 +2128,51 @@
 			};
 		};
 
+		(function(){
+			var prop;
+
+			var lazySizesDefaults = {
+				lazyClass: 'lazyload',
+				loadedClass: 'lazyloaded',
+				loadingClass: 'lazyloading',
+				preloadClass: 'lazypreload',
+				errorClass: 'lazyerror',
+				//strictClass: 'lazystrict',
+				autosizesClass: 'lazyautosizes',
+				srcAttr: 'data-src',
+				srcsetAttr: 'data-srcset',
+				sizesAttr: 'data-sizes',
+				//preloadAfterLoad: false,
+				minSize: 40,
+				customMedia: {},
+				init: true,
+				expFactor: 1.5,
+				hFac: 0.8,
+				loadMode: 2,
+				loadHidden: true,
+				ricTimeout: 0,
+				throttleDelay: 125,
+			};
+
+			lazySizesConfig = window.lazySizesConfig || window.lazysizesConfig || {};
+
+			for(prop in lazySizesDefaults){
+				if(!(prop in lazySizesConfig)){
+					lazySizesConfig[prop] = lazySizesDefaults[prop];
+				}
+			}
+
+			window.lazySizesConfig = lazySizesConfig;
+
+			setTimeout(function(){
+				if(lazySizesConfig.init){
+					init();
+				}
+			});
+		})();
 
 		var loader = (function(){
-			var lazyloadElems, preloadElems, isCompleted, resetPreloadingTimer, loadMode, started;
+			var preloadElems, isCompleted, resetPreloadingTimer, loadMode, started;
 
 			var eLvW, elvH, eLtop, eLleft, eLright, eLbottom;
 
@@ -2670,13 +2181,13 @@
 			var regImg = /^img$/i;
 			var regIframe = /^iframe$/i;
 
-			var supportScroll = ('onscroll' in window) && !(/glebot/.test(navigator.userAgent));
+			var supportScroll = ('onscroll' in window) && !(/(gle|ing)bot/.test(navigator.userAgent));
 
 			var shrinkExpand = 0;
 			var currentExpand = 0;
 
 			var isLoading = 0;
-			var lowRuns = 0;
+			var lowRuns = -1;
 
 			var resetPreloading = function(e){
 				isLoading--;
@@ -2692,7 +2203,7 @@
 			var isNestedVisible = function(elem, elemExpand){
 				var outerRect;
 				var parent = elem;
-				var visible = getCSS(document.body, 'visibility') == 'hidden' || getCSS(elem, 'visibility') != 'hidden';
+				var visible = getCSS(document.body, 'visibility') == 'hidden' || (getCSS(elem.parentNode, 'visibility') != 'hidden' && getCSS(elem, 'visibility') != 'hidden');
 
 				eLtop -= elemExpand;
 				eLbottom += elemExpand;
@@ -2718,6 +2229,8 @@
 			var checkElements = function() {
 				var eLlen, i, rect, autoLoadElem, loadedSomething, elemExpand, elemNegativeExpand, elemExpandVal, beforeExpandVal;
 
+				var lazyloadElems = lazysizes.elements;
+
 				if((loadMode = lazySizesConfig.loadMode) && isLoading < 8 && (eLlen = lazyloadElems.length)){
 
 					i = 0;
@@ -2726,17 +2239,17 @@
 
 					if(preloadExpand == null){
 						if(!('expand' in lazySizesConfig)){
-							lazySizesConfig.expand = docElem.clientHeight > 500 ? 500 : 400;
+							lazySizesConfig.expand = docElem.clientHeight > 500 && docElem.clientWidth > 500 ? 500 : 370;
 						}
 
 						defaultExpand = lazySizesConfig.expand;
 						preloadExpand = defaultExpand * lazySizesConfig.expFactor;
 					}
 
-					if(currentExpand < preloadExpand && isLoading < 1 && lowRuns > 3 && loadMode > 2){
+					if(currentExpand < preloadExpand && isLoading < 1 && lowRuns > 2 && loadMode > 2 && !document.hidden){
 						currentExpand = preloadExpand;
 						lowRuns = 0;
-					} else if(loadMode > 1 && lowRuns > 2 && isLoading < 6){
+					} else if(loadMode > 1 && lowRuns > 1 && isLoading < 6){
 						currentExpand = defaultExpand;
 					} else {
 						currentExpand = shrinkExpand;
@@ -2766,6 +2279,7 @@
 							(eLright = rect.right) >= elemNegativeExpand * hFac &&
 							(eLleft = rect.left) <= eLvW &&
 							(eLbottom || eLright || eLleft || eLtop) &&
+							(lazySizesConfig.loadHidden || getCSS(lazyloadElems[i], 'visibility') != 'hidden') &&
 							((isCompleted && isLoading < 3 && !elemExpandVal && (loadMode < 3 || lowRuns < 4)) || isNestedVisible(lazyloadElems[i], elemExpand))){
 							unveilElement(lazyloadElems[i]);
 							loadedSomething = true;
@@ -2790,6 +2304,7 @@
 				addClass(e.target, lazySizesConfig.loadedClass);
 				removeClass(e.target, lazySizesConfig.loadingClass);
 				addRemoveLoadEvents(e.target, rafSwitchLoadingClass);
+				triggerEvent(e.target, 'lazyloaded');
 			};
 			var rafedSwitchLoadingClass = rAFIt(switchLoadingClass);
 			var rafSwitchLoadingClass = function(e){
@@ -2805,7 +2320,7 @@
 			};
 
 			var handleSources = function(source){
-				var customMedia, parent;
+				var customMedia;
 
 				var sourceSrcset = source[_getAttribute](lazySizesConfig.srcsetAttr);
 
@@ -2815,13 +2330,6 @@
 
 				if(sourceSrcset){
 					source.setAttribute('srcset', sourceSrcset);
-				}
-
-				//https://bugzilla.mozilla.org/show_bug.cgi?id=1170572
-				if(customMedia){
-					parent = source.parentNode;
-					parent.insertBefore(source.cloneNode(), source);
-					parent.removeChild(source);
 				}
 			};
 
@@ -2873,18 +2381,18 @@
 						}
 					}
 
-					if(srcset || isPicture){
+					if(isImg && (srcset || isPicture)){
 						updatePolyfill(elem, {src: src});
 					}
 				}
 
-				rAF(function(){
-					if(elem._lazyRace){
-						delete elem._lazyRace;
-					}
-					removeClass(elem, lazySizesConfig.lazyClass);
+				if(elem._lazyRace){
+					delete elem._lazyRace;
+				}
+				removeClass(elem, lazySizesConfig.lazyClass);
 
-					if( !firesLoad || elem.complete ){
+				rAF(function(){
+					if( !firesLoad || (elem.complete && elem.naturalWidth > 1)){
 						if(firesLoad){
 							resetPreloading(event);
 						} else {
@@ -2892,7 +2400,7 @@
 						}
 						switchLoadingClass(event);
 					}
-				});
+				}, true);
 			});
 
 			var unveilElement = function (elem){
@@ -2904,7 +2412,7 @@
 				var sizes = isImg && (elem[_getAttribute](lazySizesConfig.sizesAttr) || elem[_getAttribute]('sizes'));
 				var isAuto = sizes == 'auto';
 
-				if( (isAuto || !isCompleted) && isImg && (elem.src || elem.srcset) && !elem.complete && !hasClass(elem, lazySizesConfig.errorClass)){return;}
+				if( (isAuto || !isCompleted) && isImg && (elem[_getAttribute]('src') || elem.srcset) && !elem.complete && !hasClass(elem, lazySizesConfig.errorClass) && hasClass(elem, lazySizesConfig.lazyClass)){return;}
 
 				detail = triggerEvent(elem, 'lazyunveilread').detail;
 
@@ -2947,7 +2455,7 @@
 				_: function(){
 					started = Date.now();
 
-					lazyloadElems = document.getElementsByClassName(lazySizesConfig.lazyClass);
+					lazysizes.elements = document.getElementsByClassName(lazySizesConfig.lazyClass);
 					preloadElems = document.getElementsByClassName(lazySizesConfig.lazyClass + ' ' + lazySizesConfig.preloadClass);
 					hFac = lazySizesConfig.hFac;
 
@@ -2978,7 +2486,12 @@
 						setTimeout(onload, 20000);
 					}
 
-					throttledCheckElements(lazyloadElems.length > 0);
+					if(lazysizes.elements.length){
+						checkElements();
+						rAF._lsFlush();
+					} else {
+						throttledCheckElements();
+					}
 				},
 				checkElems: throttledCheckElements,
 				unveil: unveilElement
@@ -3057,47 +2570,7 @@
 			}
 		};
 
-		(function(){
-			var prop;
-
-			var lazySizesDefaults = {
-				lazyClass: 'lazyload',
-				loadedClass: 'lazyloaded',
-				loadingClass: 'lazyloading',
-				preloadClass: 'lazypreload',
-				errorClass: 'lazyerror',
-				//strictClass: 'lazystrict',
-				autosizesClass: 'lazyautosizes',
-				srcAttr: 'data-src',
-				srcsetAttr: 'data-srcset',
-				sizesAttr: 'data-sizes',
-				//preloadAfterLoad: false,
-				minSize: 40,
-				customMedia: {},
-				init: true,
-				expFactor: 1.5,
-				hFac: 0.8,
-				loadMode: 2
-			};
-
-			lazySizesConfig = window.lazySizesConfig || window.lazysizesConfig || {};
-
-			for(prop in lazySizesDefaults){
-				if(!(prop in lazySizesConfig)){
-					lazySizesConfig[prop] = lazySizesDefaults[prop];
-				}
-			}
-
-			window.lazySizesConfig = lazySizesConfig;
-
-			setTimeout(function(){
-				if(lazySizesConfig.init){
-					init();
-				}
-			});
-		})();
-
-		return {
+		lazysizes = {
 			cfg: lazySizesConfig,
 			autoSizer: autoSizer,
 			loader: loader,
@@ -3110,9 +2583,11 @@
 			gW: getWidth,
 			rAF: rAF,
 		};
+
+		return lazysizes;
 	}
 	));
 
 
-/***/ }
+/***/ })
 /******/ ]);
